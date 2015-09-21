@@ -1,7 +1,12 @@
 # Leitura-ppm
 
-void leitura() {
-	int w, h;
+#include <fstream>
+#include <math.h>
+#include "Image.h"
+
+Image* leitura {
+public:
+	int width, height;
 	ifstream arq;
 	char linha[1024];
 	arq.open("c:\\imagem1.ppm");
@@ -12,21 +17,22 @@ void leitura() {
 	}
 	else
 	{
-		w = atoi(linha);
+		width = atoi(linha);
 	}
 	arq >> linha;
-	h = atoi(linha);
+	height = atoi(linha);
 	arq >> linha;
-	image = new Image(w, h);
+	image = new Image(width, height);
 
-	Image *image = new Image(w, h);
-	for (int i = 0; i < w * h; i++) {
+	Image *image = new Image(width, height);
+	for (int i = 0; i < width * height; i++) {
 		int a, r, g, b;
 		arq >> a >> r >> g >> b;
-		int x = i % w;
-		int y = i / w;
-		y = h - y - 1; // inverte o y
+		int x = i % width;
+		int y = i / width;
+		y = height - y - 1; // inverte o y
 		int pixel = (a << 24) | (r << 16) | (g << 8) | b;
 		image->setPixels(pixel, x, y);
 	}
-}
+	return image;
+};
